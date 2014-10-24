@@ -1,5 +1,7 @@
 # BreakoutDetection R package
 
+[![Build Status](https://travis-ci.org/eddelbuettel/breakoutdetection.png)](https://travis-ci.org/eddelbuettel/breakoutdetection)
+
 BreakoutDetection is an open-source R package that makes breakout detection simple and fast. The BreakoutDetection package can be used in wide variety of contexts. For example, detecting breakout in user engagement post an A/B test, detecting [behavioral change](http://wiki.cbr.washington.edu/qerm/index.php/Behavioral_Change_Point_Analysis), or for problems in econometrics, financial engineering, political and social sciences.
 
 ## How the package works
