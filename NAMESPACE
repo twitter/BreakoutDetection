@@ -1,4 +1,4 @@
 useDynLib(BreakoutDetection)
 export(breakout)
 importFrom(Rcpp, evalCpp)
-import(ggplot2)
+import(ggplot2, scales, stringr)
