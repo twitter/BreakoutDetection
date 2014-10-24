@@ -1,0 +1,12 @@
+Package: BreakoutDetection
+Type: Package
+Title: Breakout Detection via Robust E-Statistics
+Version: 1.0.1
+Date: 2014-10-07
+Author: Nicholas A. James and Arun Kejariwal and David S. Matteson
+Maintainer: Nicholas A. James <nj89@cornell.edu>
+Description: This package performs single and multiple change point analysis of univariate time series. The procedures are designed to be robust to the existence of anomalies within the time series.
+License: GPL(>= 2)
+Imports: Rcpp (>= 0.11.2), ggplot2
+LinkingTo: Rcpp
+Packaged: 2014-10-09 22:48:03 UTC; njames
