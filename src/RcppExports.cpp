@@ -7,7 +7,7 @@ using namespace Rcpp;
 
 // EDM_multi
 List EDM_multi(const NumericVector& Z, int min_size = 24, double beta = 0, int degree = 0);
-RcppExport SEXP edm_EDM_multi(SEXP ZSEXP, SEXP min_sizeSEXP, SEXP betaSEXP, SEXP degreeSEXP) {
+RcppExport SEXP BreakoutDetection_EDM_multi(SEXP ZSEXP, SEXP min_sizeSEXP, SEXP betaSEXP, SEXP degreeSEXP) {
 BEGIN_RCPP
     SEXP __sexp_result;
     {
@@ -25,7 +25,7 @@ END_RCPP
 }
 // EDM_percent
 List EDM_percent(const NumericVector& Z, int min_size = 24, double percent = 0, int degree = 0);
-RcppExport SEXP edm_EDM_percent(SEXP ZSEXP, SEXP min_sizeSEXP, SEXP percentSEXP, SEXP degreeSEXP) {
+RcppExport SEXP BreakoutDetection_EDM_percent(SEXP ZSEXP, SEXP min_sizeSEXP, SEXP percentSEXP, SEXP degreeSEXP) {
 BEGIN_RCPP
     SEXP __sexp_result;
     {
@@ -43,7 +43,7 @@ END_RCPP
 }
 // EDM_tail
 List EDM_tail(NumericVector& Z, int min_size = 24, double alpha = 2, double quant = 0.5);
-RcppExport SEXP edm_EDM_tail(SEXP ZSEXP, SEXP min_sizeSEXP, SEXP alphaSEXP, SEXP quantSEXP) {
+RcppExport SEXP BreakoutDetection_EDM_tail(SEXP ZSEXP, SEXP min_sizeSEXP, SEXP alphaSEXP, SEXP quantSEXP) {
 BEGIN_RCPP
     SEXP __sexp_result;
     {
@@ -61,7 +61,7 @@ END_RCPP
 }
 // EDMX
 List EDMX(const NumericVector& Z, int min_size = 24, double alpha = 2);
-RcppExport SEXP edm_EDMX(SEXP ZSEXP, SEXP min_sizeSEXP, SEXP alphaSEXP) {
+RcppExport SEXP BreakoutDetection_EDMX(SEXP ZSEXP, SEXP min_sizeSEXP, SEXP alphaSEXP) {
 BEGIN_RCPP
     SEXP __sexp_result;
     {

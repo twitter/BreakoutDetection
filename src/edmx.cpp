@@ -45,7 +45,7 @@ List EDMX(const NumericVector& Z, int min_size = 24, double alpha=2){
 	std::priority_queue<double> LeftMax;
 	std::priority_queue<double, std::vector<double>, std::greater<double> > LeftMin;
 
-	double stat = -3, stat_best = -3, t1, t2;
+	double stat = -3, stat_best = -3, t1=0.0, t2;
 	int tau1, tau2;
 	int N = Z.size();
 	for(int i=0; i<min_size-1; ++i)
