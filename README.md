@@ -8,20 +8,10 @@ The underlying algorithm – referred to as E-Divisive with Medians (EDM) – em
 In addition, EDM is non-parametric. This is important since the distribution of production data seldom (if at all) follows the commonly assumed normal distribution or any other widely accepted model. Our experience has been that time series often contain more than one breakout. To this end, the package can also be used to detect multiple breakouts in a given time series.
 
 ## How to get started
-Download the package by cloning the git repo via the following command. 
-```
-git clone https://github.com/twitter/breakout.git
-```
 Install the R package using the following commands on the R console:
-
-### Install the dependencies
 ```
-install.packages(c(“ggplot2”, “stringr”, “scales”, “Rcpp”))
-library(c(“ggplot2”, “stringr”, “scales”, “Rcpp”))
-```
-### Install the package from source
-```
-install.packages("BreakoutDetection_1.0.1.tar.gz", repos=NULL, type='source') 
+install.packages("devtools")
+devtools::install_github("twitter/BreakoutDetection")
 library(BreakoutDetection)
 ```
 
@@ -40,4 +30,4 @@ res = breakout(Scribe, min.size=24, method='multi', beta=.001, degree=1, plot=TR
 res$plot
 ```
 
-From the plot, we observe that the input time series experiences a breakout and also has quite a few anomalies. The two red vertical lines denote the locations of the breakouts detected by the EDM algorithm. 
+From the plot, we observe that the input time series experiences two breakouts and also has quite a few anomalies. The two red vertical lines denote the locations of the breakouts detected by the EDM algorithm. 
