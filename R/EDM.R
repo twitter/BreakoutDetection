@@ -125,6 +125,7 @@ breakout = function(Z, min.size = 30, method = 'amoc', ...){
 			Z = data.frame(timestamp=1:length(Z), count = Z)
 		}
 
+                count <- x <- y <- xend <- yend <- 0L  ## to make R CMD check happy
 		g = ggplot2::ggplot(Z, ggplot2::aes(x=timestamp, y=count)) + ggplot2::theme_bw() + 
 		    ggplot2::theme(panel.grid.minor=ggplot2::element_blank(), panel.grid.major=ggplot2::element_blank())
 		
