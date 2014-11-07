@@ -69,8 +69,8 @@ List EDM_multi(const NumericVector& Z, int min_size=24, double beta=0, int degre
 
 			//calculate statistic value
 			double left_median = get_median(left_min,left_max), right_median = get_median(right_min,right_max);
-			double normalize = ( (t-prev[t]) * (s-t) ) / ( std::pow(s-prev[t],2) );
-			double tmp = F[t] + normalize * std::pow(left_median - right_median,2) - beta*G(number[t]);
+			double normalize = ( (t-prev[t]) * (s-t) ) / ( std::pow((double)(s-prev[t]),2.0) );
+			double tmp = F[t] + normalize * std::pow(left_median - right_median,2.0) - beta*G(number[t]);
 			//check for improved optimal statistic value
 			if(tmp > F[s]){
 				number[s] = number[t] + 1;
