@@ -27,14 +27,14 @@ extern void insert_element(multiset<double>& m, multiset<double, std::greater<do
 	if(m.size() > M.size() + 1){
 		multiset<double>::iterator i;
 		i = m.begin();
-		m.erase(m.begin());
 		M.insert(*i);
+		m.erase(m.begin());
 	}
 	else if(M.size() > m.size() + 1){
 		multiset<double, std::greater<double> >::iterator i;
 		i = M.begin();
-		M.erase(M.begin());
 		m.insert(*i);
+		M.erase(M.begin());
 	}
 }
 
@@ -65,13 +65,13 @@ extern void remove_element(multiset<double>& m, multiset<double, std::greater<do
 	if(m.size() > M.size() + 1){
 		multiset<double>::iterator i;
 		i = m.begin();
-		m.erase(m.begin());
 		M.insert(*i);
+		m.erase(m.begin());
 	}
 	else if(M.size() > m.size() + 1){
 		multiset<double, std::greater<double> >::iterator i;
 		i = M.begin();
-		M.erase(M.begin());
 		m.insert(*i);
+		M.erase(M.begin());
 	}
 }
