@@ -1,14 +1,13 @@
-#include<Rcpp.h>
 #include<set>
-#include<algorithm>
 #include<cmath>
+#include "helper.h"
 
-using namespace Rcpp;
 using namespace std;
+using namespace BreakoutDetection;
 
-extern double Linear(double x){ return 1;}
-extern double Const(double x){ return 0;}
-extern double Quadratic(double x){ return 2*x+1;}
+double BreakoutDetection::Linear(double x){ return 1;}
+double BreakoutDetection::Const(double x){ return 0;}
+double BreakoutDetection::Quadratic(double x){ return 2*x+1;}
 
 
 /*
@@ -18,7 +17,7 @@ the median in O(1), additional memory use is O(n).
 */
 
 //insert x into the appropriate tree
-extern void insert_element(multiset<double>& m, multiset<double, std::greater<double> >& M, double x){
+void BreakoutDetection::insert_element(multiset<double>& m, multiset<double, std::greater<double> >& M, double x){
 	
 	if(m.empty() || x < *(m.begin()))
 		M.insert(x);
@@ -39,7 +38,7 @@ extern void insert_element(multiset<double>& m, multiset<double, std::greater<do
 }
 
 //given a pair of trees obtain the median
-extern double get_median(const multiset<double>& m, const multiset<double, std::greater<double> >& M){
+double BreakoutDetection::get_median(multiset<double>& m, multiset<double, std::greater<double> >& M){
 
 	if(m.size() > M.size())
 		return *(m.begin());
@@ -52,7 +51,7 @@ extern double get_median(const multiset<double>& m, const multiset<double, std::
 //remove x from the tree, if multiple copies of x exist only remove 1
 //since this method is never called by the user directly it is assumed 
 //that there is at least 1 copy of x
-extern void remove_element(multiset<double>& m, multiset<double, std::greater<double> >& M, double x){
+void BreakoutDetection::remove_element(multiset<double>& m, multiset<double, std::greater<double> >& M, double x){
 
 	if(x < *(m.begin())){
 		multiset<double, std::greater<double> >::iterator i = M.find(x);
