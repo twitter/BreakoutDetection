@@ -3,14 +3,15 @@ Robust estimation of 2[mean(X)-mean(Y)]^2 time normalization factor
 This is the E-Divisive E-statistic when alpha = 2
 Instead of calculating mean(X) we calculate median(X), and similarly for Y
 */
+#include <algorithm>
+#include <vector>
+#include <queue>
+#include <math.h>
+#include "Edmx.h"
+#include "helper.h"
 
-
-#include<Rcpp.h>
-#include<algorithm>
-#include<vector>
-#include<queue>
-
-using namespace Rcpp;
+using namespace std;
+using namespace BreakoutDetection;
 
 void AddToHeaps(std::priority_queue<double, std::vector<double>, std::greater<double> >& m,
 		std::priority_queue<double>& M, double x);
@@ -18,7 +19,7 @@ void AddToHeaps(std::priority_queue<double, std::vector<double>, std::greater<do
 double getMedian(const std::priority_queue<double, std::vector<double>, std::greater<double> >& m,
 		const std::priority_queue<double>& M);
 
-double Median(const NumericVector& Z, int a, int b){
+double Median(const std::vector<double>& Z, int a, int b){
 	//Calculate the median of the values in { Z[i] : a <= i < b }
 	std::vector<double> x(Z.begin()+a, Z.begin()+b);
 	int n = x.size(), h=n/2;
@@ -37,8 +38,7 @@ double Median(const NumericVector& Z, int a, int b){
 	}
 }
 
-// [[Rcpp::export]]
-List EDMX(const NumericVector& Z, int min_size = 24, double alpha=2){
+void Edmx::evaluate(const std::vector<double>& Z, int min_size, double alpha){
 
 	alpha = 2; //Not used, just here for uniform funciton signature
 
@@ -58,14 +58,14 @@ List EDMX(const NumericVector& Z, int min_size = 24, double alpha=2){
 		double medL = getMedian(LeftMin, LeftMax);
 		
 		//Add first set of elements to the heaps for the right segment
-		for(NumericVector::const_iterator i=Z.begin()+tau1; i!=Z.begin()+tau1+min_size-1; ++i)
+		for(std::vector<double>::const_iterator i=Z.begin()+tau1; i!=Z.begin()+tau1+min_size-1; ++i)
 			AddToHeaps(RightMin, RightMax, *i);
 	
 		for(tau2=tau1+min_size; tau2<N+1; ++tau2){ // Iterate over end of prefix series locations
 			AddToHeaps(RightMin, RightMax, Z[tau2-1]);
 			double medR = getMedian(RightMin, RightMax);
 
-			stat = std::pow( medL - medR, 2 );
+			stat = pow( medL - medR, 2 );
 			stat *= ( (double)tau1*(tau2-tau1)/tau2 );
 			
 			if(stat > stat_best){
@@ -75,11 +75,10 @@ List EDMX(const NumericVector& Z, int min_size = 24, double alpha=2){
 			}
 		}
 	}
-	
-	//return statment for debugging
-	//return List::create(_["loc"]=t1, _["tail"]=t2, _["stat"]=stat_best);
 
-	return List::create(_["loc"]=t1, _["stat"]=stat_best);
+	this->loc = t1;
+	this->tail = t2;
+	this->stat = stat_best;
 }
 
 // Use 2 heaps to keep track of the median (can also be adjusted for other quantiles). One heap 
