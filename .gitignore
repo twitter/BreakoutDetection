@@ -155,7 +155,6 @@ crashlytics.properties
 crashlytics-build.properties
 
 # Ignore Specific files
-R/RcppExports.R
 src/RcppExports.cpp
 Python/breakout_detection.py
 Python/breakout_detection_wrap.cpp
