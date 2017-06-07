@@ -2,18 +2,21 @@
 This version calculates the between distance using the delta points around the change point estimate.
 */
 
-#include<Rcpp.h>
 #include<cmath>
 #include<algorithm>
 #include<iostream>
 #include<vector>
+#include "EdmTail.h"
+#include"helper.h"
 
-using namespace Rcpp;
+using namespace std;
+using namespace BreakoutDetection;
+
 
 //Class used to hold all the information about the
 //breakout location and the interval trees
 struct Information{
-	NumericVector A, B, AB;
+	std::vector<double> A, B, AB;
 	double best_stat;
 	int best_loc, best_t2;
 	int min_size, b;
@@ -22,9 +25,9 @@ struct Information{
 };
 
 Information::Information(int bb, int m){
-	A = NumericVector(1<<(bb+1));
-	B = NumericVector(1<<(bb+1));
-	AB = NumericVector(1<<(bb+1));
+	A = std::vector<double>(1<<(bb+1));
+	B = std::vector<double>(1<<(bb+1));
+	AB = std::vector<double>(1<<(bb+1));
 	b = bb;
 	best_stat = best_loc = best_t2 = -3;
 	min_size = m;
@@ -36,15 +39,15 @@ Information::Information(int bb, int m){
 	std::cout<<"best_loc: "<<info.best_loc<<std::endl;
 }*/
 
-void BackwardUpdate(NumericVector& Z, Information& info, int& tau1, double quant, double alpha);
-void ForwardUpdate(NumericVector& Z, Information& info, int& tau1, double quant, double alpha);
+void BackwardUpdate(const std::vector<double>& Z, Information& info, int& tau1, double quant, double alpha);
+void ForwardUpdate(const std::vector<double>& Z, Information& info, int& tau1, double quant, double alpha);
 
 int GetIndex(int B, double x){
 	//Get index of leaf node interval containing x
 	return (int)std::ceil(std::abs(x) * (1<<B)) + (1<<B) - 1;
 }
 
-double GetQuantile(NumericVector& x, double quant){
+double GetQuantile(std::vector<double>& x, double quant){
 	//Return approximate quantile based on the interval tree
 
 	int N = x.size();
@@ -77,9 +80,9 @@ double GetQuantile(NumericVector& x, double quant){
 	return quant*(u-l)+l;
 }
 
-IntegerVector AddToTree(int B, NumericVector& x){
-	IntegerVector A(1<<(B+1));
-	NumericVector::iterator i;
+std::vector<int> AddToTree(int B, std::vector<double>& x){
+	std::vector<int> A(1<<(B+1));
+	std::vector<double>::iterator i;
 	for(i = x.begin(); i < x.end(); ++i){//Iterage over items we wish to add to the tree
 		int index = GetIndex(B,*i);
 		while(index){
@@ -90,8 +93,7 @@ IntegerVector AddToTree(int B, NumericVector& x){
 	return A;
 }
 
-// [[Rcpp::export]]
-List EDM_tail(NumericVector& Z, int min_size=24, double alpha=2, double quant=0.5){
+void EdmTail::evaluate(const std::vector<double>& Z, int min_size, double alpha, double quant){
 
 	int N = Z.size();
 	int eps = (int)std::ceil( std::log(N) );
@@ -184,14 +186,13 @@ List EDM_tail(NumericVector& Z, int min_size=24, double alpha=2, double quant=0.
 		}
 		forward_move = !forward_move;
 	}
-	
-	//return statment for debugging
-	//return List::create(_["loc"]=info.best_loc, _["tail"]=info.best_t2, _["stat"]=info.best_stat);
 
-	return List::create(_["loc"]=info.best_loc, _["stat"]=info.best_stat);
+	this->loc = info.best_loc;
+	this->tail = info.best_t2;
+	this->stat = info.best_stat;
 }
 
-void ForwardUpdate(NumericVector& Z, Information& info, int& tau1, double quant, double alpha){
+void ForwardUpdate(const std::vector<double>& Z, Information& info, int& tau1, double quant, double alpha){
 	
 	int min_size = info.min_size;
 	int tau2 = tau1 + min_size;
@@ -291,7 +292,7 @@ void ForwardUpdate(NumericVector& Z, Information& info, int& tau1, double quant,
 	}
 }
 
-void BackwardUpdate(NumericVector& Z, Information& info, int& tau1, double quant, double alpha){
+void BackwardUpdate(const std::vector<double>& Z, Information& info, int& tau1, double quant, double alpha){
 
 	int min_size = info.min_size;
 	int tau2 = tau1 + min_size;
