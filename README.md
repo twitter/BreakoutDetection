@@ -14,8 +14,9 @@ In addition, EDM is non-parametric. This is important since the distribution of 
 Install the R package using the following commands on the R console:
 
 ```
-install.packages("devtools")
-devtools::install_github("twitter/BreakoutDetection")
+library(Rcpp)
+compileAttributes(pkgdir='~/BreakoutDetection', verbose=TRUE)
+install.packages('~/BreakoutDetection', repos=NULL, type="source")
 library(BreakoutDetection)
 ```
 
@@ -29,6 +30,7 @@ help(breakout)
 To get started, the user is recommended to use the example dataset which comes with the packages. Execute the following commands:
 
 ```
+library(BreakoutDetection)
 data(Scribe)
 res = breakout(Scribe, min.size=24, method='multi', beta=.001, degree=1, plot=TRUE)
 res$plot
@@ -40,6 +42,7 @@ From the plot, we observe that the input time series experiences two breakouts a
 ### How to get started
 
 ```
+cd Python
 swig -python -c++ breakout_detection.i
 python setup.py build_ext -I../src build
 sudo python setup.py build_ext -I../src install
