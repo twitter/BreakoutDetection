@@ -154,8 +154,9 @@ com_crashlytics_export_strings.xml
 crashlytics.properties
 crashlytics-build.properties
 
-# Ignore Specific files
-src/RcppExports.cpp
-Python/breakout_detection.py
-Python/breakout_detection_wrap.cpp
-Python/breakout_detection_wrap.cxx
+# Ignore Specific files (left in for Travis-CI)
+#R/RcppExports.R
+#src/RcppExports.cpp
+#Python/breakout_detection.py
+#Python/breakout_detection_wrap.cpp
+#Python/breakout_detection_wrap.cxx
