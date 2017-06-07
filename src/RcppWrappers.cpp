@@ -10,7 +10,7 @@ using namespace Rcpp;
 std::vector<double> toNumericVector(const Rcpp::NumericVector& Z) {
     std::vector<double> z;
 
-    for (Rcpp::NumericVector::iterator it = Z.begin(); it != Z.end(); ++it) {
+    for (Rcpp::NumericVector::const_iterator it = Z.begin(); it != Z.end(); ++it) {
         z.push_back(*it);
     }
     return z;
